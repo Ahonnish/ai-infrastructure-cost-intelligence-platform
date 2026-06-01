@@ -9,6 +9,7 @@ import {
   BarChart3,
   KeyRound,
   FileText,
+  Sparkles,
 } from "lucide-react";
 
 
@@ -63,6 +64,18 @@ export default function Sidebar() {
         >
           <FileText size={20} />
           <span>Cost Reports</span>
+        </Link>
+
+
+        <Link
+          href="/optimization"
+          className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${pathname === "/optimization"
+              ? "bg-white text-black font-medium"
+              : "hover:bg-gray-800"
+            }`}
+        >
+          <Sparkles size={20} />
+          <span>Optimization</span>
         </Link>
       </nav>
     </aside>
