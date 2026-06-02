@@ -18,6 +18,9 @@ export default function ApiKeysPage() {
             status={key.status}
             usage={key.usage}
             limit={key.limit}
+            lastUsed={key.lastUsed}
+            requests={key.requests}
+            monthlySpend={key.monthlySpend}
           />
         ))}
       </div>

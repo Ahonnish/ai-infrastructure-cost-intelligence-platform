@@ -48,8 +48,8 @@ export default function UsageChart() {
                 Weekly AI Cost Usage
             </h3>
 
-            <div className="w-full h-[320px] min-w-0">
-                <ResponsiveContainer width="99%" height="100%">
+            <div className="w-full min-w-0 h-80">
+                <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="day" />

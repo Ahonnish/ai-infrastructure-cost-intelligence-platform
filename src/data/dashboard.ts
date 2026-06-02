@@ -1,21 +1,30 @@
+
 export const dashboardMetrics = [
-    {
-      title: "Total Token Usage",
-      value: "1.2M",
-    },
-    {
-      title: "Estimated Cost",
-      value: "$842",
-    },
-    {
-      title: "API Requests",
-      value: "18,420",
-    },
-    {
-      title: "Active Models",
-      value: "6",
-    },
-  ];
+  {
+    title: "Total Token Usage",
+    value: "1.2M",
+  },
+  {
+    title: "Estimated Cost",
+    value: "$842",
+  },
+  {
+    title: "API Requests",
+    value: "18,420",
+  },
+  {
+    title: "Active Models",
+    value: "6",
+  },
+  {
+    title: "Potential Savings",
+    value: "$1,090",
+  },
+  {
+    title: "Top Cost Driver",
+    value: "GPT-4o",
+  },
+];
 
 
   export const optimizationSuggestions = [

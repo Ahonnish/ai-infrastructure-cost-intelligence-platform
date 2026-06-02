@@ -36,8 +36,8 @@ export default function ProviderUsageChart() {
         AI Provider Cost Comparison
       </h3>
 
-      <div className="w-full h-[320px] min-w-0">
-        <ResponsiveContainer width="99%" height="100%">
+      <div className="w-full min-w-0 h-80">
+        <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
 
