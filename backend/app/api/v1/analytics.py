@@ -67,3 +67,24 @@ def get_model_breakdown(db: Session = Depends(get_db)):
         }
         for row in results
     ]
+
+
+@router.get("/trends")
+def get_cost_trends(db: Session = Depends(get_db)):
+    results = (
+        db.query(
+            func.date(UsageRecord.created_at).label("date"),
+            func.sum(UsageRecord.cost).label("cost")
+        )
+        .group_by(func.date(UsageRecord.created_at))
+        .order_by(func.date(UsageRecord.created_at))
+        .all()
+    )
+
+    return [
+        {
+            "date": str(row.date),
+            "cost": float(row.cost)
+        }
+        for row in results
+    ]
