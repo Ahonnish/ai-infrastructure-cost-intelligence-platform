@@ -5,6 +5,7 @@ from sqlalchemy import func
 from app.db.session import get_db
 from app.models.usage_record import UsageRecord
 
+
 router = APIRouter(prefix="/analytics", tags=["Analytics"])
 
 
@@ -27,3 +28,42 @@ def get_summary(db: Session = Depends(get_db)):
         "total_tokens": total_tokens,
         "total_requests": total_requests,
     }
+
+@router.get("/providers")
+def get_provider_breakdown(db: Session = Depends(get_db)):
+    results = (
+        db.query(
+            UsageRecord.provider,
+            func.sum(UsageRecord.cost).label("cost")
+        )
+        .group_by(UsageRecord.provider)
+        .all()
+    )
+
+    return [
+        {
+            "provider": row.provider,
+            "cost": float(row.cost)
+        }
+        for row in results
+    ]
+
+
+@router.get("/models")
+def get_model_breakdown(db: Session = Depends(get_db)):
+    results = (
+        db.query(
+            UsageRecord.model_name,
+            func.sum(UsageRecord.cost).label("cost")
+        )
+        .group_by(UsageRecord.model_name)
+        .all()
+    )
+
+    return [
+        {
+            "model_name": row.model_name,
+            "cost": float(row.cost)
+        }
+        for row in results
+    ]
