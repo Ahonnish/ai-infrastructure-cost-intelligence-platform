@@ -28,3 +28,11 @@ def get_cost_trends(
     db: Session = Depends(get_db)
 ):
     return AnalyticsService.get_cost_trends(db, days)
+
+
+@router.get("/dashboard")
+def get_dashboard(
+    days: int = 30,
+    db: Session = Depends(get_db)
+):
+    return AnalyticsService.get_dashboard(db, days)

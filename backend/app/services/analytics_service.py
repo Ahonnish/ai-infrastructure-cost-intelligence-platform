@@ -87,3 +87,12 @@ class AnalyticsService:
             }
             for row in results
         ]
+
+    @staticmethod
+    def get_dashboard(db: Session, days: int = 30):
+        return {
+            "summary": AnalyticsService.get_summary(db),
+            "providers": AnalyticsService.get_provider_breakdown(db),
+            "models": AnalyticsService.get_model_breakdown(db),
+            "trends": AnalyticsService.get_cost_trends(db, days),
+        }
