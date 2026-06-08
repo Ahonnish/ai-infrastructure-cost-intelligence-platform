@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import func
+from datetime import datetime, timedelta
 
 from app.db.session import get_db
 from app.models.usage_record import UsageRecord
@@ -70,12 +71,18 @@ def get_model_breakdown(db: Session = Depends(get_db)):
 
 
 @router.get("/trends")
-def get_cost_trends(db: Session = Depends(get_db)):
+def get_cost_trends(
+    days: int = 30,
+    db: Session = Depends(get_db)
+):
+    cutoff_date = datetime.utcnow() - timedelta(days=days)
+
     results = (
         db.query(
             func.date(UsageRecord.created_at).label("date"),
             func.sum(UsageRecord.cost).label("cost")
         )
+        .filter(UsageRecord.created_at >= cutoff_date)
         .group_by(func.date(UsageRecord.created_at))
         .order_by(func.date(UsageRecord.created_at))
         .all()
