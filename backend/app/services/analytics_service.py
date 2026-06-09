@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 
 from app.models.usage_record import UsageRecord
 
@@ -67,7 +67,7 @@ class AnalyticsService:
 
     @staticmethod
     def get_cost_trends(db: Session, days: int = 30):
-        cutoff_date = datetime.utcnow() - timedelta(days=days)
+        cutoff_date = datetime.now(UTC) - timedelta(days=days)
 
         results = (
             db.query(
