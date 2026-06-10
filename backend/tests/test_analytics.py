@@ -5,7 +5,7 @@ from app.main import app
 client = TestClient(app)
 
 
-def test_dashboard_endpoint():
+def test_dashboard_endpoint(client):
     response = client.get("/api/v1/analytics/dashboard")
 
     assert response.status_code == 200

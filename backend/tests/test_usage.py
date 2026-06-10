@@ -5,7 +5,7 @@ from app.main import app
 client = TestClient(app)
 
 
-def test_create_usage_record():
+def test_create_usage_record(client):
     payload = {
         "provider": "OpenAI",
         "model_name": "gpt-5",
