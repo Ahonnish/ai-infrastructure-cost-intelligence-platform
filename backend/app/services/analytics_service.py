@@ -1,14 +1,20 @@
+import logging
+
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from datetime import datetime, timedelta, UTC
 
 from app.models.usage_record import UsageRecord
 
+logger = logging.getLogger(__name__)
 
 class AnalyticsService:
 
     @staticmethod
     def get_summary(db: Session):
+        
+        logger.info("Generating analytics summary")
+        
         total_cost = db.query(
             func.coalesce(func.sum(UsageRecord.cost), 0)
         ).scalar()
@@ -29,6 +35,9 @@ class AnalyticsService:
 
     @staticmethod
     def get_provider_breakdown(db: Session):
+        
+        logger.info("Generating provider breakdown")
+        
         results = (
             db.query(
                 UsageRecord.provider,
@@ -48,6 +57,7 @@ class AnalyticsService:
 
     @staticmethod
     def get_model_breakdown(db: Session):
+        logger.info("Generating model breakdown")
         results = (
             db.query(
                 UsageRecord.model_name,
@@ -67,6 +77,9 @@ class AnalyticsService:
 
     @staticmethod
     def get_cost_trends(db: Session, days: int = 30):
+        
+        logger.info(f"Generating cost trends for last {days} days")
+        
         cutoff_date = datetime.now(UTC) - timedelta(days=days)
 
         results = (
@@ -90,6 +103,9 @@ class AnalyticsService:
 
     @staticmethod
     def get_dashboard(db: Session, days: int = 30):
+        
+        logger.info("Generating dashboard analytics")
+        
         return {
             "summary": AnalyticsService.get_summary(db),
             "providers": AnalyticsService.get_provider_breakdown(db),
