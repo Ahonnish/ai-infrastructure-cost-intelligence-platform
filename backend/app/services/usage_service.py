@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from app.models.usage_record import UsageRecord
 from app.schemas.usage_record import UsageRecordCreate
 
+
 logger = logging.getLogger(__name__)
 
 

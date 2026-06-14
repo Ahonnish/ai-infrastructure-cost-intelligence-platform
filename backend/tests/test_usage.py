@@ -23,7 +23,10 @@ def test_create_usage_record(client):
 
     assert response.status_code == 200
 
-    data = response.json()
+    body = response.json()
 
-    assert data["provider"] == "OpenAI"
-    assert data["model_name"] == "gpt-5"
+    assert body["success"] is True
+    assert body["message"] == "Usage record created successfully"
+
+    assert body["data"]["provider"] == "OpenAI"
+    assert body["data"]["model_name"] == "gpt-5"

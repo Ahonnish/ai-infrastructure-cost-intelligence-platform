@@ -2,10 +2,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
-from app.schemas.usage_record import (
-    UsageRecordCreate,
-    UsageRecordResponse
-)
+from app.schemas.common import ApiResponse
+from app.schemas.usage_record import UsageRecordCreate
 from app.services.usage_service import UsageService
 
 router = APIRouter(
@@ -13,13 +11,24 @@ router = APIRouter(
     tags=["Usage"]
 )
 
+from app.schemas.usage_record import (
+    UsageRecordCreate,
+    UsageRecordResponse
+)
 
-@router.post("/", response_model=UsageRecordResponse)
+
+@router.post("/", response_model=ApiResponse)
 def create_usage_record(
     usage: UsageRecordCreate,
     db: Session = Depends(get_db)
 ):
-    return UsageService.create_usage_record(
+    record = UsageService.create_usage_record(
         db=db,
         usage=usage
     )
+
+    return {
+        "success": True,
+        "message": "Usage record created successfully",
+        "data": UsageRecordResponse.model_validate(record)
+    }
