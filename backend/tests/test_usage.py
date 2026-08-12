@@ -1,11 +1,6 @@
-from fastapi.testclient import TestClient
-from app.main import app
 import uuid
 
-client = TestClient(app)
-
-
-def test_create_usage_record():
+def test_create_usage_record(client):
 
     unique_id = uuid.uuid4().hex[:8]
 

@@ -1,7 +1,7 @@
 from datetime import datetime, UTC
 
-from sqlalchemy import DateTime, Float, Integer, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import DateTime, Float, ForeignKey, Integer, String  # updated imports
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
 
@@ -51,7 +51,17 @@ class UsageRecord(Base):
         default=1
     )
 
+    user_id: Mapped[int] = mapped_column(  # new update
+        ForeignKey("users.id"),
+        nullable=False,
+        index=True
+    )
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
         default=lambda: datetime.now(UTC)
+    )
+
+    user: Mapped["User"] = relationship( # new update
+        back_populates="usage_records"
     )

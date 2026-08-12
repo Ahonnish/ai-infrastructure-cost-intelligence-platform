@@ -1,11 +1,6 @@
-from fastapi.testclient import TestClient
-from app.main import app
 import uuid
 
-client = TestClient(app)
-
-
-def test_dashboard_endpoint():
+def test_dashboard_endpoint(client):
 
     unique_id = uuid.uuid4().hex[:8]
 

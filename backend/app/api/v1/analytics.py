@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
-from app.services.analytics_service import AnalyticsService
 from app.dependencies.auth import get_current_user
 from app.models.user import User
+from app.services.analytics_service import AnalyticsService
 
 router = APIRouter(
     prefix="/analytics",
@@ -17,7 +17,10 @@ def get_summary(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    return AnalyticsService.get_summary(db)
+    return AnalyticsService.get_summary(
+        db,
+        current_user.id
+    )
 
 
 @router.get("/providers")
@@ -25,7 +28,10 @@ def get_provider_breakdown(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    return AnalyticsService.get_provider_breakdown(db)
+    return AnalyticsService.get_provider_breakdown(
+        db,
+        current_user.id
+    )
 
 
 @router.get("/models")
@@ -33,7 +39,10 @@ def get_model_breakdown(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    return AnalyticsService.get_model_breakdown(db)
+    return AnalyticsService.get_model_breakdown(
+        db,
+        current_user.id
+    )
 
 
 @router.get("/trends")
@@ -44,6 +53,7 @@ def get_cost_trends(
 ):
     return AnalyticsService.get_cost_trends(
         db,
+        current_user.id,
         days
     )
 
@@ -56,5 +66,6 @@ def get_dashboard(
 ):
     return AnalyticsService.get_dashboard(
         db,
+        current_user.id,
         days
     )
